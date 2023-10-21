@@ -11,7 +11,8 @@ client = MongoClient(uri)
 db = client['Sri_Lakshya_Project']
 collection = db['Queries']
 app.secret_key = 'Sri_Lakshya_Project'
-CORS(app, resources={r"/submit": {"origins": "*"}})
+CORS(app, resources={r"/submit": {"origins": "http://54.163.16.72:11000"}})
+
 
 @app.route('/submit', methods=['POST'])
 def submit_data():
