@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify,redirect,session,url_for
 import json
+import os
 from pymongo import MongoClient
 from flask_cors import CORS
 
@@ -21,5 +22,6 @@ def submit_data():
         return jsonify(message='Data inserted successfully'), 200
     except Exception as e:
         return jsonify(error=str(e)), 500
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0',port =11000 )
