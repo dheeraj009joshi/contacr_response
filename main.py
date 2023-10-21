@@ -13,15 +13,21 @@ collection = db['Queries']
 app.secret_key = 'Sri_Lakshya_Project'
 CORS(app, resources={r"/submit": {"origins": "*"}})
 
-@app.route('/submit', methods=['POST'])
+@app.route('/submit', methods=['POST', 'OPTIONS'])
 def submit_data():
-    try:
+    if request.method == 'OPTIONS':
+        response = jsonify(message='CORS preflight request allowed')
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+        response.headers.add('Access-Control-Allow-Methods', 'POST')
+        return response
+    elif request.method == 'POST':
+        # Handle POST request as usual
         data = request.get_json()  # Get JSON data from the request
         collection.insert_one(data)
         print("done")
         return jsonify(message='Data inserted successfully'), 200
-    except Exception as e:
-        return jsonify(error=str(e)), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=11000)
